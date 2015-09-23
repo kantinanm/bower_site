@@ -1,0 +1,27 @@
+{
+  "name": "bower_site",
+  "version": "1.0.0",
+  "authors": [
+    "Kantinan Makmee <kantinanm@nu.ac.th>"
+  ],
+  "description": "webcomponent embedded system",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "prepare",
+    "web",
+    "module"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#1.1.0"
+  }
+}

@@ -1,0 +1,1 @@
+exports.dbconstring ='mongodb://user:pass@host:port/document';
