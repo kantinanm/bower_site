@@ -1,0 +1,49 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+
+
+<dom-module id="grade-report-panel">
+     <iron-ajax 
+      id="getQuery"            
+      handle-as="json"
+      on-response="_handleResponse"></iron-ajax>
+      
+  <template>
+    <div class="vertial layout" style="width:200px">
+      <div class="horizontal layout flex" >
+        <paper-input label="Course" value="{{course}}" class="flex"></paper-input>
+      </div>
+    </div>
+    
+  </template>
+  <script>
+  
+    Polymer({
+      is: 'grade-report-panel',
+      properties: {
+        course:String,
+        hasCourse: {
+         type:Boolean,
+         value: false,
+         notify:true
+        }
+      },
+      ready: function() {      
+      },
+      observers: [
+      'updateQuery(course)'
+      ],
+      
+      updateQuery: function(course) {   
+          if((/^\d{6}$/).test(course)) {
+            this.$.getQuery.url = "/api/"+course;
+            this.$.getQuery.generateRequest();
+          }
+      },
+      _handleResponse: function() {
+        this.set('hasCourse',true);
+      }
+    });
+  </script>
+</dom-module>
