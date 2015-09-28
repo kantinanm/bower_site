@@ -4,16 +4,27 @@
 
 
 <dom-module id="grade-report-panel">
-     <iron-ajax 
-      id="getQuery"            
-      handle-as="json"
-      on-response="_handleResponse"></iron-ajax>
+     
       
   <template>
+    
+    <iron-ajax 
+      id="getQuery"  
+      handle-as="json"
+      on-response="_handleResponse">
+     </iron-ajax>
+    
     <div class="vertial layout" style="width:200px">
       <div class="horizontal layout flex" >
         <paper-input label="Course" value="{{course}}" class="flex"></paper-input>
       </div>
+    </div>
+    
+    <div class="">
+      <template is="dom-repeat" items="{{course_list}}">
+        <div><span>{{item.course_id}}</span></div>
+         <div><span>{{item.course_name.thai}}</span></div>
+      </template>
     </div>
     
   </template>
@@ -22,27 +33,36 @@
     Polymer({
       is: 'grade-report-panel',
       properties: {
-        course:String,
+        course: String,
+        course_list: Object,
         hasCourse: {
          type:Boolean,
          value: false,
          notify:true
         }
       },
-      ready: function() {      
+      ready: function() {  
+            this.$.getQuery.url = "/api/course";
+            this.$.getQuery.generateRequest();
       },
       observers: [
       'updateQuery(course)'
       ],
       
-      updateQuery: function(course) {   
+      updateQuery: function(course) {  
           if((/^\d{6}$/).test(course)) {
-            this.$.getQuery.url = "/api/"+course;
-            this.$.getQuery.generateRequest();
+           // this.$.getQuery.url = "/api/"+course;
+           // this.$.getQuery.generateRequest();
           }
       },
       _handleResponse: function() {
-        this.set('hasCourse',true);
+        var section_list = this.$.getQuery.lastResponse;
+        console.log(section_list);
+        this.set('course_list',this.$.getQuery.lastResponse);
+        
+        for(var i=0;i<section_list.length;i++) {
+          console.log(section_list[i].course_id);
+        }
       }
     });
   </script>
