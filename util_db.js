@@ -36,3 +36,22 @@ exports.InsertCourse = function(args) {
  // cb('s');
 
 };
+
+exports.InsertCurriculum = function(args) {
+ 
+  
+  var conn =exports.ConnectDb(function(obj_db) { 
+     var collection = obj_db.collection('curriculum');
+    
+      for(i=0;i<args.length;i++){
+         console.log("i="+i+",");
+
+         collection.insertOne(args[i]);
+
+      }
+      obj_db.close();
+  }); 
+
+ // cb('s');
+
+};
