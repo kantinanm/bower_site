@@ -55,3 +55,22 @@ exports.InsertCurriculum = function(args) {
  // cb('s');
 
 };
+
+exports.InsertCurriculumCourseRel = function(args) {
+ 
+  
+  var conn =exports.ConnectDb(function(obj_db) { 
+     var collection = obj_db.collection('curriculum_course_rel');
+    
+      for(i=0;i<args.length;i++){
+         console.log("i="+i+",");
+
+         collection.insertOne(args[i]);
+
+      }
+      obj_db.close();
+  }); 
+
+ // cb('s');
+
+};

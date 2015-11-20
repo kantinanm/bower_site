@@ -106,6 +106,43 @@ router.route('/curriculum/create')
 
 app.use('/api', router);
 
+
+router.route('/curriculum_course_rel/create')
+
+    // create a bear (accessed at POST http://localhost:3000/api/course/create)
+
+.post(function(req, res) {
+
+        // save the bear and check for errors
+      
+        var mapping_list = [];
+
+        var mapping_tmp ={
+       
+          curriculum_id:req.body.curriculum_id, //curriculum_id
+          course_id:req.body.course_id, //course_id
+          degree :{
+                thai : req.body.abbr_th, //abbr_th,
+                english : req.body.abbr_en //abbr_en
+          },
+        }
+        
+        mapping_list.push(mapping_tmp);
+        console.log('mapping_list length :'+mapping_list.length);
+
+        util.InsertCurriculumCourseRel(mapping_list);
+
+       res.json({ message: 'curriculum_course_rel created!',
+                item :mapping_list  
+                });
+       
+    //console.log('req :'+req.body.course_id);
+});
+
+
+app.use('/api', router);
+
+/*
 router.route('/course')
  .get(function(req, res) {
        //res.json({ message: 'get all course !' });  
@@ -129,6 +166,24 @@ router.route('/curriculum')
        
        util.ConnectDb(function(obj_db) {  
          var collection = obj_db.collection('curriculum');
+         collection.find().toArray(function(err, docs) {
+           
+              res.json(docs);
+              console.log('docs length :'+docs.length);
+              obj_db.close();
+           });
+
+       });
+  });
+app.use('/api', router);
+*/
+
+router.route('/:collection')
+ .get(function(req, res) {
+       //res.json({ message: 'get all course !' });  
+       
+       util.ConnectDb(function(obj_db) {  
+         var collection = obj_db.collection(req.params.collection);
          collection.find().toArray(function(err, docs) {
            
               res.json(docs);
